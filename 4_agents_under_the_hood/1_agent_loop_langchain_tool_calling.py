@@ -7,7 +7,12 @@ from langchain.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 
 MAX_ITERATIONS = 10
+MODEL_PROVIDER = "ollama"
 MODEL = "qwen3.5:2b"
+# MODEL = "gemma4:e2b"
+
+# MODEL_PROVIDER = 'deepseek'
+# MODEL = 'deepseek-v4-flash'
 
 @tool
 def get_product_price(product: str) -> float:
@@ -34,7 +39,7 @@ def run_agent(question: str) -> str:
     tools = [get_product_price, apply_discount]
     tools_dict = {t.name: t for t in tools}
 
-    llm = init_chat_model(f"ollama:{MODEL}", temperature = 0)
+    llm = init_chat_model(f"{MODEL_PROVIDER}:{MODEL}", temperature = 0)
     llm_with_tools = llm.bind_tools(tools)
 
     print(f"Question: {question}")
@@ -67,6 +72,8 @@ def run_agent(question: str) -> str:
             print(f"\nFinal answer: {ai_message.content}")
             return ai_message.content
 
+        messages.append(ai_message)
+
         tool_call = tool_calls[0]
         tool_name = tool_call.get("name")
         tool_args = tool_call.get("args",{})
@@ -82,7 +89,6 @@ def run_agent(question: str) -> str:
 
         print(f"Tool result {observation}")
 
-        messages.append(ai_message)
         messages.append(ToolMessage(content=str(observation),
                         tool_call_id=tool_call_id)
                         )
