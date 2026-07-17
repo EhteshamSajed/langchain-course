@@ -26,15 +26,6 @@ if __name__ == "__main__":
             DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default")
     )
 
-    # print("Embedding texts...")
-    # for i, text in enumerate(texts):
-    #     vector = embeddings.embed_query(text.page_content)
-    #     print(f"\n--- Chunk {i + 1} ---")
-    #     print(f"Content: {text.page_content[:200]}...")
-    #     print(f"Vector length: {len(vector)}")
-    #     print(f"First 5 values: {vector[:5]}")
-    # print("\nDone!")
-
     print("Ingesting...")
 
     # SSL error
