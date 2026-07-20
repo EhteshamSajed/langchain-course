@@ -10,7 +10,7 @@ from langchain_ollama import OllamaEmbeddings
 
 
 load_dotenv()
-print("USE_OLLAMA?", os.getenv("USE_OLLAMA"))
+
 if __name__ == "__main__":
     loader = TextLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)), "mediumblog1.txt"), encoding="utf-8")
     document = loader.load()
